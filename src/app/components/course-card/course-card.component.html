@@ -1,45 +1,47 @@
-<div class="course-card" [ngClass]="cardClasses()">
-  <div class="course-title" [ngStyle]="cardStyles()">
-    {{ index }} {{ course.description }}
+<ng-container *ngIf="course">
+  <div class="course-card" [ngClass]="cardClasses()">
+    <div class="course-title" [ngStyle]="cardStyles()">
+      {{ index || "" }} {{ course.description }}
+    </div>
+
+    <!-- if it is a object it is going to be considered TRUE -->
+    @if (course.id ==1) {
+    <h2>Course with ID 1 detected</h2>
+    } @else if (course.iconUrl) {
+    <img #courseImage width="300" alt="Angular Logo" [src]="course.iconUrl" />
+    } @else {
+    <h2>No Image available</h2>
+    }
+
+    <!-- OLD TEMPLATE // *ngIf -->
+    <!-- <img
+      *ngIf="course.iconUrl; else noImage"
+      width="300"
+      alt="Angular Logo"
+      [src]="course.iconUrl"
+    />
+  
+    <ng-template #noImage>
+      <p>no image is available</p>
+    </ng-template> -->
+
+    <div class="course-category">
+      @switch (course.category) { @case ('BEGINNER') {
+      <div class="category">Beginner</div>
+      } @case ('INTERMEDIATE') {
+      <div class="category">Intermediate</div>
+      } @case ('ADVANCED') {
+      <div class="category">Advanced</div>
+      } @default {
+      <div class="category">All Levels</div>
+
+      }}
+    </div>
+
+    <div class="course-description">
+      {{ course.longDescription }}
+    </div>
+
+    <button (click)="onCourseViewed()">View Course</button>
   </div>
-
-  <!-- if it is a object it is going to be considered TRUE -->
-  @if (course.id ==1) {
-  <h2>Course with ID 1 detected</h2>
-  } @else if (course.iconUrl) {
-  <img width="300" alt="Angular Logo" [src]="course.iconUrl" />
-  } @else {
-  <h2>No Image available</h2>
-  }
-
-  <!-- OLD TEMPLATE // *ngIf -->
-  <!-- <img
-    *ngIf="course.iconUrl; else noImage"
-    width="300"
-    alt="Angular Logo"
-    [src]="course.iconUrl"
-  />
-
-  <ng-template #noImage>
-    <p>no image is available</p>
-  </ng-template> -->
-
-  <div class="course-category">
-    @switch (course.category) { @case ('BEGINNER') {
-    <div class="category">Beginner</div>
-    } @case ('INTERMEDIATE') {
-    <div class="category">Intermediate</div>
-    } @case ('ADVANCED') {
-    <div class="category">Advanced</div>
-    } @default {
-    <div class="category">All Levels</div>
-
-    }}
-  </div>
-
-  <div class="course-description">
-    {{ course.longDescription }}
-  </div>
-
-  <button (click)="onCourseViewed()">View Course</button>
-</div>
+</ng-container>
